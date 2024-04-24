@@ -13,6 +13,7 @@ import { MapaComponent } from './components/vistas/mapa/mapa.component';
 import { NosotrosComponent } from './components/vistas/nosotros/nosotros.component';
 import { AvisoDePrivacidadComponent } from './components/complementos/aviso-de-privacidad/aviso-de-privacidad.component';
 import { ReestablecerContComponent } from './components/formularios/reestablecer-cont/reestablecer-cont.component';
+import { VerifyComponent } from './components/formularios/verify/verify.component';
 
 const routes: Routes = [
   {path: 'Inicio', component: IndexComponent, data: {
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'Nosotros', component: NosotrosComponent, data: {breadcrumb: 'Inicio / Nosotros'}},
   {path: 'Policy',component: AvisoDePrivacidadComponent, data: {breadcrumb: 'Aviso de privacidad'}},
   {path: 'restablecer',component: ReestablecerContComponent, data: {breadcrumb: 'Login / Restablecer '}},
+  {path: 'Verify',component: VerifyComponent, data: {breadcrumb: 'Login / Verify '}},
   {path: '**',component: NotFoundComponent, data: {breadcrumb: ''}}
 ];
 

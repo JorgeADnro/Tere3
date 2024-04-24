@@ -50,6 +50,12 @@ export class PacienteServices {
     )
   }
 
+  verify(formValue: any){
+    return firstValueFrom(
+      this.http.post<any>(`${this.baseUrl}/usersReg/verify`, formValue)
+    )
+  }
+
   logout(): Observable<any> {
     return from(
       this.http.post<any>(`${this.baseUrl}/usersReg/logout`, {})
@@ -73,17 +79,8 @@ export class PacienteServices {
 
   restablecerPassword(formValue: any) {
     return firstValueFrom(
-      this.http.post<any>(`${this.baseUrl}/restablecer`, formValue)
-    ).then(response => {
-      const resetUrl = response.resetUrl;
-      if (resetUrl) {
-        window.open(resetUrl, '_blank');
-      } else {
-        console.error('No se recibió la URL de restablecimiento del servidor.');
-      }
-    }).catch(error => {
-      console.error('Error al restablecer la contraseña:', error);
-    });
+      this.http.post<any>(`${this.baseUrl}/forgot-password`, formValue)
+    )
   }
 
 }

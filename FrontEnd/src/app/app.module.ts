@@ -30,6 +30,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { ReestablecerContComponent } from './components/formularios/reestablecer-cont/reestablecer-cont.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { VerifyComponent } from './components/formularios/verify/verify.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     SearchComponent,
     MapaComponent,
     NosotrosComponent,
-    ReestablecerContComponent
+    ReestablecerContComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,
