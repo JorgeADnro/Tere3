@@ -545,7 +545,7 @@ select {
 	border: 1px solid #5e6576;
 	border-radius: 20px;
 	background-color: transparent;
-	margin-left:20%;
+	margin-left: 20%;
 }
 
 .cards-1 .card-icon {
@@ -2522,6 +2522,26 @@ button.swiper-pagination-bullet {
 .containerBread {
 	margin-left: 10rem;
 	margin-top: 8rem;
+	margin-bottom: 2rem;
+}
+
+a:link {
+	text-decoration: none !important;
+}
+
+a:visited {
+	text-decoration: none !important;
+	color: #000 !important;
+
+}
+
+a:hover {
+	text-decoration: none !important;
+}
+
+a:active {
+	text-decoration: none !important;
+	color: #000 !important;
 }
 
 .loadError img {
