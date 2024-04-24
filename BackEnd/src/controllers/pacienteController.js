@@ -127,7 +127,7 @@ exports.obtenerCiudades = async (req, res) => {
 
 exports.obtenerPaciente = async (req, res) => {
     try {
-        let paciente = await paciente.findById(req.params.id);
+        let paciente = await user.findById(req.params.id);
 
         if (!paciente) {
             return res.status(404).json({ msg: "No existe el paciente" });
@@ -149,7 +149,7 @@ exports.obtenerPaciente = async (req, res) => {
 
 exports.eliminarPaciente = async(req,res) =>{
     try {
-        let paciente = await Paciente.findById(req.params.id);
+        let paciente = await user.findById(req.params.id);
         if(!paciente){
             return res.status(404).json({msg: "No existe el paciente"});
         }
@@ -161,53 +161,3 @@ exports.eliminarPaciente = async(req,res) =>{
     }
     
 }
-
-exports.EnviarToken = async (req, res, next) => {
-    try {
-        const email = req.body.email;
-
-        console.log("Correo electrónico proporcionado:", email);
-
-        // Buscar al usuario por correo electrónico
-        let usuario = await user.findOne({ email });
-
-        if (!usuario) {
-            req.flash('error', 'Usuario no encontrado');
-            return res.redirect('/Login');
-        }
-
-        // Generar y asignar un nuevo token al usuario
-        const token = Crypto.randomBytes(20).toString('hex');
-        usuario.Token = token;
-        usuario.expira = Date.now() + 3600000; // 1 hora en milisegundos
-
-        // Guardar los cambios en la base de datos
-        usuario = await usuario.save();
-
-        console.log("Usuario actualizado:", usuario);
-
-        const ResetUrl = `http://${req.headers.host}/api/restablecer-password/${token}`;
-        console.log("Reset URL:", ResetUrl);
-
-        req.flash('correcto', 'Revisa tu bandeja de Email');
-        res.json({ resetUrl: ResetUrl });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Hubo un error al enviar el token');
-    }
-}
-
-
-exports.ValidarToken = async (req, res) => {
-    try {
-        const Token = req.params.Token;
-
-        res.render('resetPassword', { Token });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Hubo un error al procesar la solicitud');
-    }
-}
-
-
-

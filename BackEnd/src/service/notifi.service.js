@@ -12,12 +12,15 @@ const transporter = nodemailer.createTransport({
 });
 
 // Función que envía el correo
-exports.notificarPaciente = (mail, mat, nom, apeP, apeM) => {
+exports.notificarPaciente = (mail, resetUrl) => {
     const mailOptions = {
         from: 'jorgelamanrique@gmail.com',
         to: mail,
-        subject: `Bienvenido ${nom} ${apeP} ${apeM}!`,
-        text: `Prueba de matrícula: ${mat}`
+        subject: 'Restablecimiento de contraseña',
+        html: `<p>Hola,</p>
+               <p>Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace para restablecerla:</p>
+               <a href="${resetUrl}">Restablecer contraseña</a>
+               <p>Si no has solicitado este cambio, ignora este mensaje.</p>`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
