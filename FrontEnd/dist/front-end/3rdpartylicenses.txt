@@ -68,6 +68,9 @@ MIT
 
 @sweetalert2/ngx-sweetalert2
 
+ngx-captcha
+MIT
+
 ngx-paypal
 MIT
 
