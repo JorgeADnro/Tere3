@@ -12,28 +12,23 @@
     </div>
   </div>
   <div class="containerBread" *ngIf="!loader">
-    <a href="Inicio">Inicio</a> / <a href="Login">Login</a> / Recuperar Contraseña
+    <a href="Inicio">Inicio</a> / <a href="Login">Login</a> / Confirmar cuenta
   </div>
 <div class="wrapper fadeInDown" *ngIf="!loader">
     <div id="formContent">
-      <h2 class="fadeIn first">Restablecer Contraseña</h2>
+      <h2 class="fadeIn first">Ingrese su código de verificación</h2>
   
       <div class="CrearCuenta">
-        <form [formGroup]="formulario" (ngSubmit)="submitForm()" class="default-form" action="/restablecer">
+        <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="default-form" action="/restablecer">
           <div class="Campo" >
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" class="fadeIn second" placeholder="Email" formControlName="email" required>
+            <input type="number" name="email" id="email" class="fadeIn second" placeholder="Código" formControlName="code">
           </div>
   
           <div class="Campo left">
-            <button type="submit" class="btn btn-info">Restablecer</button>
+            <button type="submit" class="btn btn-info">Confirmar</button>
             <span class="underlineHover"></span>
           </div>
         </form>
-  
-        <div class="Campo Acciones">
-          <a href="/Login" class="underlineHover">¿Haz recordado tu contraseña? Vuelve a iniciar sesión.</a>
-        </div>
       </div>
     </div>
   </div>

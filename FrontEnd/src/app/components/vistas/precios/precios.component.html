@@ -3,7 +3,9 @@
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>
-
+<div class="containerBread"  *ngIf="!loader">
+    <a href="Inicio">Inicio</a> / Planes
+  </div>
 <div class="container" *ngIf="!loader">
     <div class="row justify-content-center">
         <div class="col-md-6">

@@ -8,7 +8,9 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-
+      <div class="containerBread"  *ngIf="!loader">
+        <a href="Inicio">Inicio</a> / Mapa
+      </div>
       <div *ngIf="!loader" style="margin-left:100px;">
       <h1>Mapa</h1>
       <ol>

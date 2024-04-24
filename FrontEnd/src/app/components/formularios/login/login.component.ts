@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PacienteServices } from 'src/app/services/paciente.service';
 import Swal from 'sweetalert2';
@@ -9,48 +9,33 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
- 
-
+export class LoginComponent implements OnInit {
   
   protected aFormGroup!: FormGroup;
-  siteKey:string = "6Lf2774pAAAAACmp4Ko2AygVn7T9CbmjL2ZJNNfB";
-
-
-
   formulario: FormGroup;
   loader = true;
   hide = true;
   showPasswordResetLink = false;
 
-  constructor(private pacienteService: PacienteServices, private router: Router,private formBuilder: FormBuilder) {
-    this.formulario = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl()
+  constructor(private pacienteService: PacienteServices, private router: Router, private formBuilder: FormBuilder) {
+    this.formulario = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
   }
   
-  ngOnInit():void {
-    setTimeout(()=>{
+  ngOnInit(): void {
+    setTimeout(() => {
       this.loader = false;
     }, 2000);
-    this.aFormGroup = this.formBuilder.group({
-      recaptcha: ['', Validators.required]
-    });
   }
 
-
-
-  async onSubmit() {
+  async onSubmit2() {
     try {
       const response = await this.pacienteService.login(this.formulario.value);
       if (!response.error) {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('username', response.username);
-        localStorage.setItem('userRole', response.userRole);
-        this.showCorrectPopup();
-        this.router.navigate(['/Inicio']).then(() => {
-          setTimeout(()=>{
+        this.router.navigate(['/Verify']).then(() => {
+          setTimeout(() => {
             window.location.reload();
           }, 2000);
         });
@@ -62,6 +47,30 @@ export class LoginComponent {
       this.showErrorPopup();
     }
   }
+
+  /*
+  async onSubmit() {
+    try {
+      const response = await this.pacienteService.login(this.formulario.value);
+      if (!response.error) {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('username', response.username);
+        localStorage.setItem('userRole', response.userRole);
+        this.showCorrectPopup();
+        this.router.navigate(['/Inicio']).then(() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        });
+      } else {
+        this.showErrorPopup();
+      }
+    } catch (error) {
+      console.error(error);
+      this.showErrorPopup();
+    }
+  }
+  */
   
   showErrorPopup() {
     Swal.fire({
@@ -78,5 +87,4 @@ export class LoginComponent {
       icon: "success"
     });
   }
-
 }

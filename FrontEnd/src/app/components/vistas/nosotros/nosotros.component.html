@@ -7,7 +7,9 @@
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-
+<div class="containerBread"  *ngIf="!loader">
+  <a href="Inicio">Inicio</a> / Nosotros
+</div>
 <div class="container" *ngIf="!loader">
     <div class="row justify-content-center">
       <div class="col-lg-10 col-md-12">
