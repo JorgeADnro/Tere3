@@ -13,7 +13,7 @@ exports.guardarPaciente = async (req, res) => {
             return res.status(400).send('No se proporcionaron los archivos');
         }
 
-        const { nom, apeP, apeM, calle, no, col, ciudad, cp, numTelCa, numTelAsp, numTelMaPa, mail, cD, pD, SLAO, SLOD, SLOI, CLAO, CLOD, CLOI } = req.body;
+        const { nom, apeP, apeM, calle, no, col, ciudad, cp, numTelCa, numTelAsp, numTelMaPa, mail} = req.body;
 
         const mat = generarMatricula(apeP, apeM, nom);
         const foto = req.files['foto'][0];
@@ -36,14 +36,6 @@ exports.guardarPaciente = async (req, res) => {
             numTelAsp,
             numTelMaPa,
             mail,
-            cD, 
-            pD, 
-            SLAO, 
-            SLOD, 
-            SLOI, 
-            CLAO, 
-            CLOD, 
-            CLOI,
             fechReg,
             foto: {
                 data: foto.buffer,
@@ -56,8 +48,6 @@ exports.guardarPaciente = async (req, res) => {
         });
 
         await paciente.save();
-
-        notificarPaciente(mail, mat, nom, apeP, apeM);
 
         res.send(paciente);
         
@@ -127,7 +117,7 @@ exports.obtenerCiudades = async (req, res) => {
 
 exports.obtenerPaciente = async (req, res) => {
     try {
-        let paciente = await user.findById(req.params.id);
+        let paciente = await Paciente.findById(req.params.id);
 
         if (!paciente) {
             return res.status(404).json({ msg: "No existe el paciente" });
@@ -149,7 +139,7 @@ exports.obtenerPaciente = async (req, res) => {
 
 exports.eliminarPaciente = async(req,res) =>{
     try {
-        let paciente = await user.findById(req.params.id);
+        let paciente = await Paciente.findById({_id: req.params.id});
         if(!paciente){
             return res.status(404).json({msg: "No existe el paciente"});
         }

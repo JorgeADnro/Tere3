@@ -53,38 +53,6 @@ const pacienteSchema = mongoose.Schema({
         type: String,
         required: false
     },
-    cD: {
-        type: String,
-        required: false
-    },
-    pD: {
-        type: String,
-        required: false
-    },
-    SLAO: {
-        type: Number,
-        required: false
-    },
-    SLOD: {
-        type: Number,
-        required: false
-    },
-    SLOI: {
-        type: Number,
-        required: false
-    },
-    CLAO: {
-        type: Number,
-        required: false
-    },
-    CLOD: {
-        type: Number,
-        required: false
-    },
-    CLOI: {
-        type: Number,
-        required: false
-    },
     coment: {
         type: String,
         required: false
