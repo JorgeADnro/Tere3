@@ -1,6 +1,6 @@
 {
     "/api/asps": {
-        "target":"http://localhost:9000",
+        "target":"https://opticuida.onrender.com",
         "secure":false,
         "logLevel": "debug"
     }
