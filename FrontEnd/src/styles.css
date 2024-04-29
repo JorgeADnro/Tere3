@@ -2525,21 +2525,21 @@ button.swiper-pagination-bullet {
 	margin-bottom: 2rem;
 }
 
-a:link {
+.containerBread a:link {
 	text-decoration: none !important;
 }
 
-a:visited {
+.containerBread a:visited {
 	text-decoration: none !important;
 	color: #000 !important;
 
 }
 
-a:hover {
+.containerBread a:hover {
 	text-decoration: none !important;
 }
 
-a:active {
+.containerBread a:active {
 	text-decoration: none !important;
 	color: #000 !important;
 }

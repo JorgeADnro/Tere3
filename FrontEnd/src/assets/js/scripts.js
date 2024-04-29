@@ -2,89 +2,89 @@ let myButton;
 
 // Esperar hasta que el documento HTML y todos los recursos asociados se hayan cargado completamente
 document.addEventListener("DOMContentLoaded", function () {
-	myButton = document.getElementById("myBtn");
+    myButton = document.getElementById("myBtn");
 
-	window.onscroll = function () {
-		scrollFunction();
-		scrollFunctionBTT();
-	};
+    window.onscroll = function () {
+        scrollFunction();
+        scrollFunctionBTT();
+    };
 
-	if (myButton) {
-		myButton.addEventListener("click", function () {
-			window.scrollTo({
-				top: 0,
-				behavior: "smooth"
-			});
-		});
-	}
+    if (myButton) {
+        myButton.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    }
 
 });
 
 // Función para cambiar el estilo del botón "volver arriba" basado en la posición del scroll
 function scrollFunctionBTT() {
-	// Verificar si myButton está definido antes de intentar acceder a su propiedad style
-	if (myButton) {
-		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-			myButton.style.opacity = "1";
-		} else {
-			myButton.style.opacity = "0";
-		}
-	}
+    // Verificar si myButton está definido antes de intentar acceder a su propiedad style
+    if (myButton) {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            myButton.style.opacity = "1";
+        } else {
+            myButton.style.opacity = "0";
+        }
+    }
 }
 
 // Función para cambiar el estilo de la barra de navegación basado en la posición del scroll
 function scrollFunction() {
-	const navbarExample = document.getElementById("navbarExample");
-	// Verificar si navbarExample está definido antes de intentar acceder a su propiedad classList
-	if (navbarExample) {
-		if (document.documentElement.scrollTop > 30) {
-			navbarExample.classList.add("top-nav-collapse");
-		} else if (document.documentElement.scrollTop < 30) {
-			navbarExample.classList.remove("top-nav-collapse");
-		}
-	}
+    const navbarExample = document.getElementById("navbarExample");
+    // Verificar si navbarExample está definido antes de intentar acceder a su propiedad classList
+    if (navbarExample) {
+        if (document.documentElement.scrollTop > 30) {
+            navbarExample.classList.add("top-nav-collapse");
+        } else if (document.documentElement.scrollTop < 30) {
+            navbarExample.classList.remove("top-nav-collapse");
+        }
+    }
 }
 
 // Hover en escritorio
 function toggleDropdown(e) {
-	// Verifica si el evento tiene un objetivo y si ese objetivo es un descendiente de un elemento con la clase "dropdown"
-	const _d = e.target.closest(".dropdown");
-	// Verifica si el elemento _d está presente en el DOM
-	if (_d) {
-		let _m = document.querySelector(".dropdown-menu", _d);
-		setTimeout(function () {
-			// Verifica si _d todavía está presente en el DOM y si el usuario sigue hover sobre él
-			if (_d.matches(":hover")) {
-				_m.classList.add("show");
-				_d.classList.add("show");
-				_d.setAttribute("aria-expanded", true);
-			} else {
-				_m.classList.remove("show");
-				_d.classList.remove("show");
-				_d.setAttribute("aria-expanded", false);
-			}
-		}, e.type === "mouseleave" ? 300 : 0);
-	}
+    // Verifica si el evento tiene un objetivo y si ese objetivo es un descendiente de un elemento con la clase "dropdown"
+    const _d = e.target.closest(".dropdown");
+    // Verifica si el elemento _d está presente en el DOM
+    if (_d) {
+        let _m = document.querySelector(".dropdown-menu", _d);
+        setTimeout(function () {
+            // Verifica si _d todavía está presente en el DOM y si el usuario sigue hover sobre él
+            if (_d.matches(":hover")) {
+                _m.classList.add("show");
+                _d.classList.add("show");
+                _d.setAttribute("aria-expanded", true);
+            } else {
+                _m.classList.remove("show");
+                _d.classList.remove("show");
+                _d.setAttribute("aria-expanded", false);
+            }
+        }, e.type === "mouseleave" ? 300 : 0);
+    }
 }
 /* Card Slider - Swiper */
 var cardSlider = new Swiper('.card-slider', {
-	autoplay: {
-		delay: 5000,
-		disableOnInteraction: false
-	},
-	loop: true,
-	navigation: {
-		nextEl: '.swiper-button-next',
-		prevEl: '.swiper-button-prev'
-	},
-	slidesPerView: 2,
-	spaceBetween: 70,
-	breakpoints: {
-		// when window is <= 991px
-		991: {
-			slidesPerView: 1
-		}
-	}
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false
+    },
+    loop: true,
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+    },
+    slidesPerView: 2,
+    spaceBetween: 70,
+    breakpoints: {
+        // when window is <= 991px
+        991: {
+            slidesPerView: 1
+        }
+    }
 });
 
 
@@ -92,65 +92,65 @@ var cardSlider = new Swiper('.card-slider', {
 const gridCheck = document.querySelector('.grid');
 
 if (gridCheck !== null) {
-	// init Isotope
-	var iso = new Isotope('.grid', {
-		itemSelector: '.element-item',
-		layoutMode: 'fitRows'
-	});
+    // init Isotope
+    var iso = new Isotope('.grid', {
+        itemSelector: '.element-item',
+        layoutMode: 'fitRows'
+    });
 
-	// bind filter button click
-	var filtersElem = document.querySelector('.filters-button-group');
-	filtersElem.addEventListener('click', function (event) {
-		// only work with buttons
-		if (!matchesSelector(event.target, 'button')) {
-			return;
-		}
-		var filterValue = event.target.getAttribute('data-filter');
-		// use matching filter function
-		iso.arrange({ filter: filterValue });
-	});
+    // bind filter button click
+    var filtersElem = document.querySelector('.filters-button-group');
+    filtersElem.addEventListener('click', function (event) {
+        // only work with buttons
+        if (!matchesSelector(event.target, 'button')) {
+            return;
+        }
+        var filterValue = event.target.getAttribute('data-filter');
+        // use matching filter function
+        iso.arrange({ filter: filterValue });
+    });
 
-	// change is-checked class on buttons
-	var buttonGroups = document.querySelectorAll('.button-group');
-	for (var i = 0, len = buttonGroups.length; i < len; i++) {
-		var buttonGroup = buttonGroups[i];
-		radioButtonGroup(buttonGroup);
-	}
+    // change is-checked class on buttons
+    var buttonGroups = document.querySelectorAll('.button-group');
+    for (var i = 0, len = buttonGroups.length; i < len; i++) {
+        var buttonGroup = buttonGroups[i];
+        radioButtonGroup(buttonGroup);
+    }
 
-	function radioButtonGroup(buttonGroup) {
-		buttonGroup.addEventListener('click', function (event) {
-			// only work with buttons
-			if (!matchesSelector(event.target, 'button')) {
-				return;
-			}
-			buttonGroup.querySelector('.is-checked').classList.remove('is-checked');
-			event.target.classList.add('is-checked');
-		});
-	}
+    function radioButtonGroup(buttonGroup) {
+        buttonGroup.addEventListener('click', function (event) {
+            // only work with buttons
+            if (!matchesSelector(event.target, 'button')) {
+                return;
+            }
+            buttonGroup.querySelector('.is-checked').classList.remove('is-checked');
+            event.target.classList.add('is-checked');
+        });
+    }
 }
 
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
-	document.body.scrollTop = 0; // for Safari
-	document.documentElement.scrollTop = 0; // for Chrome, Firefox, IE and Opera
+    document.body.scrollTop = 0; // for Safari
+    document.documentElement.scrollTop = 0; // for Chrome, Firefox, IE and Opera
 }
 
 /*
 function ajax(){
-	const http = new XMLHttpRequest();
-	const url= 'http://localhost:9000/api/pac';
-	http.onreadystatechange = function (){
-		if(this.readyState == 4 && this.status == 200) {
-			console.log(this.responseText);
-			document.getElementById('response').innerHTML = this.responseText
-		}
-	}
+    const http = new XMLHttpRequest();
+    const url= 'http://localhost:9000/api/pac';
+    http.onreadystatechange = function (){
+        if(this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            document.getElementById('response').innerHTML = this.responseText
+        }
+    }
 //const url= 'http://localhost:9000/api';
-	http.open("GET", url);
-	http.send();
+    http.open("GET", url);
+    http.send();
 }
 document.getElementById("boton").addEventListener("click", function(){
-	ajax();
+    ajax();
 });*/
 
 
@@ -192,22 +192,78 @@ function getSanitizedImageUrl(imageUrl, format) {
 
 
 //prueba
+// Importa el método eliminarPaciente del servicio PacienteServices
+const eliminarPaciente = async (id) => {
+    try {
+        // Mostrar la alerta de confirmación
+        const confirmacion = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: "¡No podrás recuperar estos datos!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirmar"
+        });
+
+        // Verificar si el usuario confirmó la eliminación
+        if (confirmacion.isConfirmed) {
+            // Realizar la solicitud de eliminación
+            const response = await fetch(`https://opticuida.onrender.com/api/pac/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            // Verificar si la eliminación fue exitosa
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Oftalmólogo eliminado:', data);
+                // Mostrar una alerta de éxito si es necesario
+                Swal.fire("¡Eliminado!", "El oftalmólogo ha sido eliminado correctamente. Por favor da clic en 'Cargar'", "success");
+            } else {
+                console.error('Error al eliminar el oftalmólogo:', response.statusText);
+                // Mostrar una alerta de error si es necesario
+                Swal.fire("Error", "No se pudo eliminar al oftalmólogo.", "error");
+            }
+        }
+    } catch (error) {
+        console.error('Error al eliminar el oftalmólogo:', error);
+        // Mostrar una alerta de error si ocurre un error en la solicitud
+        Swal.fire("Error", "Ocurrió un error al intentar eliminar al oftalmólogo.", "error");
+    }
+};
+
+function openPdf(pdfBase64) {
+    // Abrir una nueva ventana del navegador
+    const pdfWindow = window.open("");
+    
+    // Verificar si la ventana se abrió correctamente
+    if (pdfWindow) {
+        // Escribir un iframe en la nueva ventana con el PDF incrustado
+        pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + String(pdfBase64) + "'></iframe>");
+    } else {
+        // Mostrar un mensaje de error si la ventana no se pudo abrir
+        console.error("No se pudo abrir la ventana del navegador para mostrar el PDF.");
+    }
+}
+
+
 document.querySelector("#boton").addEventListener("click", traerDatos);
 
+function traerDatos() {
+    const xhttp = new XMLHttpRequest();
+    const url = 'https://opticuida.onrender.com/api/pac';
 
-function traerDatos(){
-	const xhttp = new XMLHttpRequest();
-	const url= 'http://localhost:9000/api/pac';
-    
     xhttp.open("GET", url, true);
-	xhttp.send();
-	xhttp.onreadystatechange = function (){
-		if(this.readyState == 4 && this.status == 200) {
-			let datos= JSON.parse(this.responseText)
-            
-            let ofta= document.querySelector('#ofta'); 
-            ofta.innerHTML=''; //limpiar los datos
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let datos = JSON.parse(this.responseText);
 
+            let ofta = document.querySelector('#ofta');
+            ofta.innerHTML = ''; // Limpiar los datos
 
             for (let paciente of datos) {
                 const fecha = new Date(paciente.fechReg);
@@ -220,24 +276,31 @@ function traerDatos(){
                             <img style="width: 100px; height: 100;" *ngIf="paciente.foto" src="data:image/jpeg;base64,${paciente.foto}" alt="Foto">
                         </td>
                         <td>
-                            <a *ngIf="paciente.cert" href="data:application/pdf;base64,${paciente.cert}" target="_blank" download="certificado.pdf">
-                                Descargar PDF
+                            <a *ngIf="paciente.cert" href="javascript:void(0);"
+                                onclick="openPdf('${paciente.cert}')">
+                                Ver PDF
                             </a>
                         </td>
                         <td>${fechaFormateada}</td>
-                        <td><i style="cursor: pointer;" (click)="eliminarPaciente(paciente._id)"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
+                        <td><i style="cursor: pointer;" onclick="eliminarPaciente('${paciente._id}')"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 30 30">
                         <path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
                         </svg></i></td>
                     </tr>
                     
                 `;
-                console.log("jala:3")
+                console.log("jala:3");
+                Swal.fire({
+                    title: "Listo!",
+                    text: "Se han recargado correctamente!",
+                    icon: "success"
+                });
             }
-            
-		}
-	}
-	
+
+        }
+    }
+
 }
+
 
 
 
@@ -457,3 +520,17 @@ function crearPacienteCard(paciente) {
 document.getElementById("boton").addEventListener("click", function () {
     ajax();
 });*/
+
+function toggleCardInfo(button) {
+    const cardBody = button.parentElement;
+    const ulElement = cardBody.querySelector('ul.additional-info');
+
+    if (ulElement.style.display === 'none') {
+        ulElement.style.display = 'block';
+        button.innerText = 'Ver menos';
+    } else {
+        ulElement.style.display = 'none';
+        button.innerText = 'Ver más';
+    }
+}
+
