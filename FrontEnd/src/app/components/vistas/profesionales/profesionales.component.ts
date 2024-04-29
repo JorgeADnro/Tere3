@@ -4,7 +4,7 @@ import { Paciente } from 'src/app/models/paciente';
 import { PacienteServices } from 'src/app/services/paciente.service';
 import { ToastrService } from 'ngx-toastr';
 import { InactivityService } from 'src/app/services/inactivity-service.service';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profesionales',
@@ -68,13 +68,31 @@ export class ProfesionalesComponent {
   }
 
   eliminarPaciente(id: any) {
-    if (confirm('¿Está seguro de que desea eliminar este producto?')) {
-      this._pacienteService.eliminarPaciente(id).subscribe(data => {
-        this.toastr.error('El producto fue eliminado con exito', 'Producto Eliminado');
-        this.obtenerPacientes();
-      }, error => {
-        console.log(error);
-      })
+    console.log('ID a eliminar:', id); // Agregar esta línea para verificar el ID
+    Swal.fire({
+      title: "Estás seguro?",
+      text: "No podrás recuperar estos datos!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Confirmar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._pacienteService.eliminarPaciente(id).subscribe(data => {
+          this.obtenerPacientes();
+        }, error => {
+          console.log(error);
+        });
+      }
+    });
+  }
+  openPdf(pdfBase64: String) {
+    const pdfWindow = window.open("");
+    if (pdfWindow) {
+      pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64," + String(pdfBase64) + "'></iframe>");
+    } else {
+      console.error("No se pudo abrir la ventana del navegador para mostrar el PDF.");
     }
   }
 

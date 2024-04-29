@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +18,7 @@ export class RegistrarPacientesComponent {
   pacienteForm: FormGroup;
   loader = true;
   id: string | null;
-  private fileTmp:any;
+  private fileTmp: any;
   fileTypes: { [key: string]: string } = {};
 
   constructor(private fb: FormBuilder,
@@ -29,32 +29,24 @@ export class RegistrarPacientesComponent {
     private aRoute: ActivatedRoute) {
     this.fileTmp = {};
     this.pacienteForm = this.fb.group({
-      nom: ['', Validators.required],
-      apeP: ['', Validators.required],
-      apeM: ['', Validators.required],
-      calle: ['', Validators.required],
+      nom: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+      apeP: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+      apeM: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+      calle: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
       no: ['', Validators.required],
-      col: ['', Validators.required],
-      ciudad: ['', Validators.required],
-      cp: ['', Validators.required],
-      numTelCa: ['', Validators.required],
-      numTelAsp: ['', Validators.required],
-      numTelMaPa: ['', Validators.required],
-      mail: ['', Validators.required],
-      cD: ['', Validators.required],
-      pD: ['', Validators.required],
-      SLAO: ['', Validators.required],
-      SLOI: ['', Validators.required],
-      SLOD: ['', Validators.required],
-      CLAO: ['', Validators.required],
-      CLOI: ['', Validators.required],
-      CLOD: ['', Validators.required],
+      col: ['', [Validators.required, Validators.pattern(/^[A-Za-z]+$/)]],
+      ciudad: ['', [Validators.required]],
+      cp: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
+      numTelCa: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      numTelAsp: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      numTelMaPa: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      mail: ['', [Validators.required, Validators.email]],
       coment: ['', Validators.required],
       fechReg: ['', Validators.required],
-      foto: ['',Validators.required],
+      foto: ['', Validators.required],
       cert: ['', Validators.required],
       compDom: ['', Validators.required],
-    })
+    });
     this.id = this.aRoute.snapshot.paramMap.get('id');
 
     this.fileTypes['foto'] = 'image/jpeg';
@@ -63,64 +55,58 @@ export class RegistrarPacientesComponent {
   }
   ngOnInit(): void {
     this.obtenerPacientes();
-    this.obtenerCiudades();
-    setTimeout(()=>{
+    setTimeout(() => {
       this.loader = false;
     }, 2000);
   }
 
   getFile($event: any, fieldName: string): void {
-  const [file] = $event.target.files;
+    const [file] = $event.target.files;
 
-  // Asegúrate de que fileTypes[fieldName] exista antes de intentar leerlo
-  if (!this.fileTypes[fieldName]) {
-    console.error(`Tipo de archivo para ${fieldName} no está configurado.`);
-    return;
+    // Asegúrate de que fileTypes[fieldName] exista antes de intentar leerlo
+    if (!this.fileTypes[fieldName]) {
+      console.error(`Tipo de archivo para ${fieldName} no está configurado.`);
+      return;
+    }
+
+    // Crea un nuevo Blob con el mismo contenido y establece el nuevo tipo
+    const modifiedBlob = new Blob([file], { type: this.fileTypes[fieldName] });
+
+    // Asegúrate de que fileTmp[fieldName] exista antes de intentar asignarle propiedades
+    if (!this.fileTmp[fieldName]) {
+      this.fileTmp[fieldName] = {};
+    }
+
+    this.fileTmp[fieldName].fileRaw = modifiedBlob;
+    this.fileTmp[fieldName].fileType = this.fileTypes[fieldName];
   }
 
-  // Crea un nuevo Blob con el mismo contenido y establece el nuevo tipo
-  const modifiedBlob = new Blob([file], { type: this.fileTypes[fieldName] });
-
-  // Asegúrate de que fileTmp[fieldName] exista antes de intentar asignarle propiedades
-  if (!this.fileTmp[fieldName]) {
-    this.fileTmp[fieldName] = {};
-  }
-
-  this.fileTmp[fieldName].fileRaw = modifiedBlob;
-  this.fileTmp[fieldName].fileType = this.fileTypes[fieldName];
-}
-
-  sendFiles():void{
+  sendFiles(): void {
 
     const body = new FormData();
 
-    body.append('nom',this.pacienteForm.get('nom')?.value);
-    body.append('apeP',this.pacienteForm.get('apeP')?.value);
-    body.append('apeM',this.pacienteForm.get('apeM')?.value);
-    body.append('calle',this.pacienteForm.get('calle')?.value);
-    body.append('no',this.pacienteForm.get('no')?.value);
-    body.append('col',this.pacienteForm.get('col')?.value);
-    body.append('ciudad',this.pacienteForm.get('ciudad')?.value);
-    body.append('numTelCa',this.pacienteForm.get('numTelCa')?.value);
-    body.append('cp',this.pacienteForm.get('cp')?.value);
-    body.append('numTelAsp',this.pacienteForm.get('numTelAsp')?.value);
-    body.append('numTelMaPa',this.pacienteForm.get('numTelMaPa')?.value);
-    body.append('mail',this.pacienteForm.get('mail')?.value);
-    body.append('cD',this.pacienteForm.get('cD')?.value);
-    body.append('pD',this.pacienteForm.get('pD')?.value);
-    body.append('SLAO',this.pacienteForm.get('SLAO')?.value);
-    body.append('SLOI',this.pacienteForm.get('SLOI')?.value);
-    body.append('SLOD',this.pacienteForm.get('SLOD')?.value);
-    body.append('CLAO',this.pacienteForm.get('CLAO')?.value);
-    body.append('CLOI',this.pacienteForm.get('CLOI')?.value);
-    body.append('CLOD',this.pacienteForm.get('CLOD')?.value);
-    body.append('coment',this.pacienteForm.get('apeMPa')?.value);
+    body.append('nom', this.pacienteForm.get('nom')?.value);
+    body.append('apeP', this.pacienteForm.get('apeP')?.value);
+    body.append('apeM', this.pacienteForm.get('apeM')?.value);
+    body.append('calle', this.pacienteForm.get('calle')?.value);
+    body.append('no', this.pacienteForm.get('no')?.value);
+    body.append('col', this.pacienteForm.get('col')?.value);
+    body.append('ciudad', this.pacienteForm.get('ciudad')?.value);
+    body.append('numTelCa', this.pacienteForm.get('numTelCa')?.value);
+    body.append('cp', this.pacienteForm.get('cp')?.value);
+    body.append('numTelAsp', this.pacienteForm.get('numTelAsp')?.value);
+    body.append('numTelMaPa', this.pacienteForm.get('numTelMaPa')?.value);
+    body.append('mail', this.pacienteForm.get('mail')?.value);
+    body.append('coment', this.pacienteForm.get('apeMPa')?.value);
     body.append('foto', this.fileTmp['foto'].fileRaw, this.fileTmp['foto'].fileType);
     body.append('cert', this.fileTmp['cert'].fileRaw, this.fileTmp['cert'].fileType);
 
     this._pacienteService.guardarPaciente(body).subscribe(res => {
-      if(res){
-        Swal.fire('Se ha registrado el alumno!', res.message, 'success');
+      if (res) {
+        Swal.fire('Se ha registrado el oftalmólogo!', res.message, 'success');
+        setTimeout(() => {
+          this.router.navigate(['/VerProfesionales']);
+        }, 2000);
       }
     });
 
@@ -131,13 +117,13 @@ export class RegistrarPacientesComponent {
     const blob = new Blob([buffer]);
     const imageUrl = URL.createObjectURL(blob);
     return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-}
+  }
 
-getSanitizedImageUrl(base64String: string, imageType: string): SafeUrl {
+  getSanitizedImageUrl(base64String: string, imageType: string): SafeUrl {
     const imageUrl = `data:image/${imageType};base64,${base64String}`;
     return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-}
-  
+  }
+
 
   listPaciente: Paciente[] = [];
 
@@ -146,23 +132,28 @@ getSanitizedImageUrl(base64String: string, imageType: string): SafeUrl {
     this._pacienteService.getPacientes().subscribe(data => {
       console.log(data);
       this.listPaciente = data;
-    },error => {
+    }, error => {
       console.log(error);
     })
   }
 
-  listCiudad: Ciudad[] = [];
+  listCiudad: any[] = [
+    { nom: 'Dolores Hidalgo' },
+    { nom: 'Guanajuato' },
+    { nom: 'Celaya' },
+    { nom: 'Ciudad de México' },
+    { nom: 'Monterrey' },
+    { nom: 'Guadalajara' }
+  ];
 
-  obtenerCiudades() {
-    this._pacienteService.getCiudades().subscribe(data => {
-      console.log(data);
-      this.listCiudad = data;
-    },error => {
-      console.log(error);
-    })
-    
+  capitalizeFirstLetter(controlName: string, event: any) {
+    const inputValue = event.target.value;
+    if (inputValue.length > 0) {
+      const capitalizedValue = inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
+      const control = this.pacienteForm.get(controlName);
+      if (control) {
+        control.setValue(capitalizedValue);
+      }
+    }
   }
-
-  
-
 }

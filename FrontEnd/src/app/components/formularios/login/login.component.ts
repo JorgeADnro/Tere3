@@ -34,11 +34,9 @@ export class LoginComponent implements OnInit {
     try {
       const response = await this.pacienteService.login(this.formulario.value);
       if (!response.error) {
-        this.router.navigate(['/Verify']).then(() => {
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        });
+        setTimeout(() => {
+          this.router.navigate(['/Verify']);
+        }, 2000);
       } else {
         this.showErrorPopup();
       }

@@ -39,9 +39,11 @@ export class VerifyComponent {
           }, 2000);
         });
       } else {
+        
       }
     } catch (error) {
       console.error(error);
+      this.showErrorPopup();
     }
   }
 
@@ -50,6 +52,14 @@ export class VerifyComponent {
       title: "Bienvenido!",
       text: "Haz iniciado sesión correctamente!",
       icon: "success"
+    });
+  }
+
+  showErrorPopup() {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "El código parece ser incorrecto!"
     });
   }
 }

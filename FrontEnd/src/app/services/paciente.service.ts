@@ -15,7 +15,7 @@ export class PacienteServices {
 
 
   constructor(private http:HttpClient) { 
-      this.baseUrl = 'http://localhost:9000/api'
+      this.baseUrl = 'https://opticuida.onrender.com/api'
    }
 
   getPacientes(): Observable<any>{

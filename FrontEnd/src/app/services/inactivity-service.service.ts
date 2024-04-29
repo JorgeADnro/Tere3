@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,9 @@ export class InactivityService {
 
     this.inactivityTimer = setInterval(() => {
       this.secondsRemaining--;
-      console.log('Segundos restantes:', this.secondsRemaining);
       if (this.secondsRemaining === 0) {
         this.resetTimer();
-        this.removeToken();
-        this.reloadPage();
+        this.showConfirmationAlert();
       }
     }, 1000);
 
@@ -48,6 +47,29 @@ export class InactivityService {
     this.eventSubscriptions = [];
   }
 
+  showConfirmationAlert(): void {
+    Swal.fire({
+      title: "Oye!",
+      text: "Tu sesión está por expirar!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Renovar sesión"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.startTimer();
+      } else {
+        this.logout();
+      }
+    });
+  }
+
+  logout(): void {
+    this.removeToken();
+    this.reloadPage();
+  }
+
   removeToken(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -61,6 +83,6 @@ export class InactivityService {
   }
 
   ngOnDestroy() {
-    this.eventSubscriptions.forEach(subscription => subscription.unsubscribe());
+    this.clearEventSubscriptions();
   }
 }
